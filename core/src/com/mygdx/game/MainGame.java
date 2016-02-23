@@ -17,7 +17,7 @@ public class MainGame extends ApplicationAdapter {
 
 	@Override
 	public void create () {
-		Viewport viewport = new FitViewport(800, 480);
+		Viewport viewport = new FitViewport(210, 330);
 		SceneLoader sceneLoader = new SceneLoader();
 		sceneLoader.loadScene("MainScene");
 	}
