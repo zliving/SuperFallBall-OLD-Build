@@ -7,8 +7,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.sun.prism.image.ViewPort;
 import com.uwsoft.editor.renderer.SceneLoader;
 
+import javax.swing.text.View;
 
 
 public class MainGame extends ApplicationAdapter {
@@ -17,8 +19,8 @@ public class MainGame extends ApplicationAdapter {
 
 	@Override
 	public void create () {
-		Viewport viewport = new FitViewport(210, 330);
-		SceneLoader sceneLoader = new SceneLoader();
+		Viewport viewport = new FitViewport(266, 160);
+		sceneLoader = new SceneLoader();
 		sceneLoader.loadScene("MainScene", viewport);
 	}
 
@@ -26,7 +28,6 @@ public class MainGame extends ApplicationAdapter {
 	public void render () {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
 		sceneLoader.getEngine().update(Gdx.graphics.getDeltaTime());
 	}
 }
