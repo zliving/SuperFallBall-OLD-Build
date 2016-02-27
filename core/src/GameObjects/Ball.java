@@ -6,6 +6,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.MainGame;
 import com.uwsoft.editor.renderer.components.PolygonComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
@@ -18,25 +19,27 @@ public class Ball implements IScript {
     //FIXME: Add collision detection method.
     private Entity ballEntity;
     private TransformComponent transformComponent;
-    private PolygonComponent polygonComponent;
     private float velocity = 1.0f;
     private float gravity = 2.0f;
+    private float radius = 12.0f;
 
     private Circle collisionCircle;
-    private float radius;
+    private ShapeRenderer debugRenderer;
 
     @Override
     public void init(Entity entity) {
         ballEntity = entity;
         transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
-        radius = transformComponent.x;
-        polygonComponent = ComponentRetriever.get(entity, PolygonComponent.class);
-        //polygonComponent.makeRectangle();
-        //collisionCircle = new Circle(transformComponent.x, transformComponent.y, )
+        collisionCircle = new Circle(transformComponent.x + radius, transformComponent.y + radius, radius);
+        debugRenderer = new ShapeRenderer();
     }
 
     @Override
     public void act(float delta) {
+        debugRenderer.begin(ShapeRenderer.ShapeType.Line);
+        debugRenderer.circle(collisionCircle.x, collisionCircle.y, radius);
+        debugRenderer.end();
+
         //If ball has reached the floor
         if(transformComponent.y <= 0){
             transformComponent.y = 0;
@@ -59,4 +62,5 @@ public class Ball implements IScript {
     public void dispose() {
 
     }
+
 }

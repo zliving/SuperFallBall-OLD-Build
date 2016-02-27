@@ -3,6 +3,9 @@ package com.mygdx.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.uwsoft.editor.renderer.SceneLoader;
@@ -12,7 +15,7 @@ import GameObjects.Ball;
 import GameObjects.Door;
 
 
-public class MainGame extends Game {
+public class MainGame extends Game{
 	public static int GAME_WIDTH = 640;
 	public static int GAME_HEIGHT = 960;
 	public SceneLoader sceneLoader;
