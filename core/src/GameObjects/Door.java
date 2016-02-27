@@ -9,15 +9,17 @@ import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 public class Door implements IScript{
-    //X and Y positions for the door.
-    private int x, y;
     //Size for Door object
     //These sizes are temporary
-    int SIZEX = 27;
-    int SIZEY = 46;
+    private float SIZEX = 27f;
+    private float SIZEY = 46f;
     private Rectangle collisionRect;
+    private float scaleCollisionRect = .15f;
 
+    //May need entity for later but it is currently unused right now.
     private Entity doorEntity;
+
+    //The transform component contains the position (x, y) of the door
     private TransformComponent transformComponent;
 
     //FIXME: Add collision detection method.
@@ -26,10 +28,17 @@ public class Door implements IScript{
     public void init(Entity entity) {
         doorEntity = entity;
         transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
-        collisionRect = new Rectangle(transformComponent.x, transformComponent.y, SIZEX, SIZEY);
-        //Test to make sure that collision rectangle is same place as the actual door
-//        System.out.println("Transform " + transformComponent.x + " " + transformComponent.y);
-//        System.out.println("collisionRect: " + collisionRect.getX() + " " + collisionRect.getY());
+
+        collisionRect = new Rectangle(transformComponent.x + SIZEX * scaleCollisionRect,
+                transformComponent.y + SIZEY * scaleCollisionRect,
+                SIZEX * (1.0f - 2.0f * scaleCollisionRect),     //scale is multiplied by 2 since we
+                SIZEY * (1.0f - 2.0f * scaleCollisionRect));    //trim off from both sides
+
+        //Testing for the collision rectangle
+        System.out.println("collision x: " + collisionRect.getX());
+        System.out.println("collision y: " + collisionRect.getY());
+        System.out.println("Collision width: " + collisionRect.getWidth());
+        System.out.println("Collision height: " + collisionRect.getHeight());
     }
 
     @Override
@@ -40,5 +49,13 @@ public class Door implements IScript{
     @Override
     public void dispose() {
 
+    }
+
+    public float getX(){
+        return transformComponent.x;
+    }
+
+    public float getY(){
+        return transformComponent.y;
     }
 }
