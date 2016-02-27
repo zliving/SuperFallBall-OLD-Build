@@ -1,0 +1,24 @@
+
+pack.png
+size: 128,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ball
+  rotate: false
+  xy: 2, 2
+  size: 72, 72
+  split: 0, 0, 0, 0
+  pad: -1, -1, 0, 0
+  orig: 72, 72
+  offset: 0, 0
+  index: -1
+door
+  rotate: false
+  xy: 2, 76
+  size: 81, 138
+  split: 0, 0, 0, 0
+  pad: -1, -1, 0, 0
+  orig: 81, 138
+  offset: 0, 0
+  index: -1
