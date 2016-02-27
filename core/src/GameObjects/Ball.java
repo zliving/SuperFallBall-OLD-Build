@@ -13,7 +13,7 @@ import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
-
+//New Branch merge test
 public class Ball implements IScript {
 
     //FIXME: Add collision detection method.
