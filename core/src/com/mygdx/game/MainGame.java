@@ -32,8 +32,8 @@ public class MainGame extends Game{
 		//Temporary
 		ball = new Ball();
 		door1 = new Door();
-//		ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-//		root.getChild("player").addScript(ball);
+		ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
+		root.getChild("ball").addScript(ball);
 //		root.getChild("door1").addScript(door1);
 	}
 
@@ -41,9 +41,6 @@ public class MainGame extends Game{
 	public void render () {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		//Temporary. We will move into gameScreen class for rendering
-//		ball.update();
-//		ball.render();
 		sceneLoader.getEngine().update(Gdx.graphics.getDeltaTime());
 
 	}

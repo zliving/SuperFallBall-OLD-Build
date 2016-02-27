@@ -19,9 +19,13 @@ public class Ball implements IScript {
     //FIXME: Add collision detection method.
     private Entity ballEntity;
     private TransformComponent transformComponent;
+    private float scaleUnits = 3.0f;
+
+    private float x;
+    private float y;
     private float velocity = 1.0f;
     private float gravity = 2.0f;
-    private float radius = 12.0f;
+    private float radius = 36.0f; //World units is given in overlap
 
     private Circle collisionCircle;
     private ShapeRenderer debugRenderer;
@@ -30,7 +34,11 @@ public class Ball implements IScript {
     public void init(Entity entity) {
         ballEntity = entity;
         transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
-        collisionCircle = new Circle(transformComponent.x + radius, transformComponent.y + radius, radius);
+        //Transform component is given in world units
+        x = transformComponent.x * scaleUnits;
+        y = transformComponent.y * scaleUnits;
+
+        collisionCircle = new Circle(x + radius, y + radius, radius);
         debugRenderer = new ShapeRenderer();
         System.out.println("transformComponent x: " + transformComponent.x);
         System.out.println("transformComponent y: " + transformComponent.y);
@@ -46,10 +54,11 @@ public class Ball implements IScript {
         debugRenderer.end();
 
         //If ball has reached the floor
-        if(transformComponent.y <= 0){
+        if(y <= 0){
             transformComponent.y = 0;
         } else {
-            transformComponent.y -= gravity;   //Gravity always acting on the ball;
+//            transformComponent.y -= gravity;   //Gravity always acting on the ball;
+            return;
         }
 
         //Movement
@@ -59,6 +68,10 @@ public class Ball implements IScript {
 
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             transformComponent.x += velocity;
+        }
+
+        if(Gdx.input.isKeyPressed(Input.Keys.UP)){
+            transformComponent.y += velocity;
         }
 
         update();
@@ -72,8 +85,8 @@ public class Ball implements IScript {
 
     //Update the collision circle
     public void update(){
-        collisionCircle.setX(transformComponent.x + radius);
-        collisionCircle.setY(transformComponent.y + radius);
+        collisionCircle.setX((transformComponent.x * scaleUnits) + radius);
+        collisionCircle.setY((transformComponent.y * scaleUnits) + radius);
     }
 
 }
