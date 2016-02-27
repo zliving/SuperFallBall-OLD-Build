@@ -15,6 +15,7 @@ public class Door implements IScript{
     private float SIZEY = 46f;
     private Rectangle collisionRect;
     private float scaleCollisionRect = .15f;
+    private float scaleWorldUnits = 3.0f;
 
     //May need entity for later but it is currently unused right now.
     private Entity doorEntity;
