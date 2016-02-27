@@ -32,6 +32,11 @@ public class Ball implements IScript {
         transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
         collisionCircle = new Circle(transformComponent.x + radius, transformComponent.y + radius, radius);
         debugRenderer = new ShapeRenderer();
+        System.out.println("transformComponent x: " + transformComponent.x);
+        System.out.println("transformComponent y: " + transformComponent.y);
+        //Testing
+        System.out.println("collision circle x: " + collisionCircle.x);
+        System.out.println("collision circle y: " + collisionCircle.y);
     }
 
     @Override
@@ -56,11 +61,19 @@ public class Ball implements IScript {
             transformComponent.x += velocity;
         }
 
+        update();
+
     }
 
     @Override
     public void dispose() {
 
+    }
+
+    //Update the collision circle
+    public void update(){
+        collisionCircle.setX(transformComponent.x + radius);
+        collisionCircle.setY(transformComponent.y + radius);
     }
 
 }

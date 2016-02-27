@@ -35,10 +35,10 @@ public class Door implements IScript{
                 SIZEY * (1.0f - 2.0f * scaleCollisionRect));    //trim off from both sides
 
         //Testing for the collision rectangle
-        System.out.println("collision x: " + collisionRect.getX());
-        System.out.println("collision y: " + collisionRect.getY());
-        System.out.println("Collision width: " + collisionRect.getWidth());
-        System.out.println("Collision height: " + collisionRect.getHeight());
+//        System.out.println("collision x: " + collisionRect.getX());
+//        System.out.println("collision y: " + collisionRect.getY());
+//        System.out.println("Collision width: " + collisionRect.getWidth());
+//        System.out.println("Collision height: " + collisionRect.getHeight());
     }
 
     @Override
