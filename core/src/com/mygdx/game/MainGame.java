@@ -27,8 +27,8 @@ public class MainGame extends Game{
 	public void create () {
 
 		Viewport viewport = new FitViewport(210,330);
-//		sceneLoader = new SceneLoader();
-//		sceneLoader.loadScene("MainScene", viewport);
+		sceneLoader = new SceneLoader();
+		sceneLoader.loadScene("MainScene", viewport);
 		//Temporary
 		ball = new Ball();
 		door1 = new Door();
@@ -44,7 +44,7 @@ public class MainGame extends Game{
 		//Temporary. We will move into gameScreen class for rendering
 //		ball.update();
 //		ball.render();
-//		sceneLoader.getEngine().update(Gdx.graphics.getDeltaTime());
+		sceneLoader.getEngine().update(Gdx.graphics.getDeltaTime());
 
 	}
 }
