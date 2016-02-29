@@ -1,9 +1,18 @@
 
 pack.png
-size: 128,256
+size: 256,256
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+Spikes
+  rotate: false
+  xy: 2, 216
+  size: 220, 16
+  split: 0, 0, 0, 16
+  pad: 151, 68, 0, 0
+  orig: 220, 16
+  offset: 0, 0
+  index: -1
 ball
   rotate: false
   xy: 2, 2
