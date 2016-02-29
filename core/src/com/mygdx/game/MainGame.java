@@ -20,8 +20,9 @@ public class MainGame extends Game{
 	public static int GAME_HEIGHT = 960;
 	public SceneLoader sceneLoader;
 	//Temporary
-	private Ball ball;
+	public static Ball ball;
 	private Door door1;
+
 
 	@Override
 	public void create () {
@@ -34,14 +35,19 @@ public class MainGame extends Game{
 		door1 = new Door();
 		ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
 		root.getChild("ball").addScript(ball);
-//		root.getChild("door1").addScript(door1);
+		root.getChild("door1").addScript(door1);
+
 	}
+
 
 	@Override
 	public void render () {
+		update();
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		sceneLoader.getEngine().update(Gdx.graphics.getDeltaTime());
+	}
 
+	public void update(){
 	}
 }
