@@ -7,9 +7,15 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.RayCastCallback;
+import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.MainGame;
+import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.PolygonComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
+import com.uwsoft.editor.renderer.physics.PhysicsBodyLoader;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
@@ -24,6 +30,8 @@ public class Ball implements IScript {
     private TransformComponent transformComponent;
     private float scaleUnits = 3.0f;
     private Rectangle collisionRect;
+    private DimensionsComponent demensionCompent;
+    private World world;
 
     private float velocity = 1.0f;
     private float gravity = 2.0f;
@@ -32,11 +40,17 @@ public class Ball implements IScript {
 
     public boolean colliding = false;
 
+    public Ball(World world)
+    {
+        this.world = world;
+    }
+
     @Override
     public void init(Entity entity) {
         width = height = 2 * radius;
         ballEntity = entity;
         transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
+        demensionCompent = ComponentRetriever.get(entity, DimensionsComponent.class);
         collisionRect = new Rectangle(transformComponent.x, transformComponent.y, width, height);
     }
 
@@ -75,6 +89,34 @@ public class Ball implements IScript {
 //        System.out.println("Transform ball y: " + transformComponent.y);
 //        System.out.println("Collision ball x: " + collisionRect.getX());
 //        System.out.println("Collision ball y: " + collisionRect.getY());
+        rayCast();
+    }
+
+   private void rayCast() {
+        float rayGap = demensionCompent.height/2;
+        float raySize = -(transformComponent.y+Gdx.graphics.getDeltaTime())*Gdx.graphics.getDeltaTime();
+
+        if(raySize<5f){
+            raySize = 5f;
+        }
+        if(transformComponent.y>=0){return;}
+       // Vectors of ray from middle bottom
+       Vector2 rayFrom = new Vector2((transformComponent.x+demensionCompent.width/2)* PhysicsBodyLoader.getScale(), transformComponent.y*PhysicsBodyLoader.getScale());
+       Vector2 rayTo = new Vector2((transformComponent.x+demensionCompent.width/2)*PhysicsBodyLoader.getScale(), (transformComponent.y - raySize)*PhysicsBodyLoader.getScale());
+
+       // Cast the ray
+       world.rayCast(new RayCastCallback() {
+           @Override
+           public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
+               // Stop the player
+               transformComponent.y = 0;
+
+               // reposition player slightly upper the collision point
+               transformComponent.y = (point.y / PhysicsBodyLoader.getScale()+ 0.1f);
+
+               return 0;
+           }
+       }, rayFrom, rayTo);
     }
 
     @Override
@@ -85,6 +127,7 @@ public class Ball implements IScript {
     public void updateBounds(){
         collisionRect.setX(transformComponent.x);
         collisionRect.setY(transformComponent.y);
+
     }
 
     //Getters and setters
@@ -105,7 +148,7 @@ public class Ball implements IScript {
     }
 
     public float getWidth(){
-        return 2 * radius;
+        return demensionCompent.width;
     }
 
     public float getHeight(){
