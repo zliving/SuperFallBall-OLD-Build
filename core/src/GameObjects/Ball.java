@@ -34,9 +34,11 @@ public class Ball implements IScript {
     private World world;
 
     private float velocity = 1.0f;
-    private float gravity = 2.0f;
+    private float gravity = -9.0f;
     private float radius = 12; //World units
     private float height, width;
+    private float verticalSpeed = 1.5f;
+    private Vector2 speed;
 
     public boolean colliding = false;
 
@@ -52,18 +54,14 @@ public class Ball implements IScript {
         transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
         demensionCompent = ComponentRetriever.get(entity, DimensionsComponent.class);
         collisionRect = new Rectangle(transformComponent.x, transformComponent.y, width, height);
+        speed = new Vector2(0,-100f);
     }
 
     @Override
     public void act(float delta) {
 
-        //If ball has reached the floor
-        if(collisionRect.getY() <= 0){
-            transformComponent.y = 0;
-        } else {
-            transformComponent.y -= gravity;   //Gravity always acting on the ball;
+        //transformComponent.y -= gravity;   //Gravity always acting on the ball;
 
-        }
 
 
         //Movement
@@ -83,25 +81,30 @@ public class Ball implements IScript {
             transformComponent.y -= velocity;
         }
 
+        speed.y += gravity*delta;
+        transformComponent.y += (speed.y*delta);
+
+
         updateBounds();
+        rayCast();
 //        Testing
 //        System.out.println("Transform ball x: " + transformComponent.x);
 //        System.out.println("Transform ball y: " + transformComponent.y);
 //        System.out.println("Collision ball x: " + collisionRect.getX());
 //        System.out.println("Collision ball y: " + collisionRect.getY());
-        rayCast();
+
     }
 
    private void rayCast() {
         float rayGap = demensionCompent.height/2;
-        float raySize = -(transformComponent.y+Gdx.graphics.getDeltaTime())*Gdx.graphics.getDeltaTime();
+        float raySize =  -(speed.y+Gdx.graphics.getDeltaTime())*Gdx.graphics.getDeltaTime();
 
-        if(raySize<5f){
+      /*  if(raySize<5f){
             raySize = 5f;
-        }
-        if(transformComponent.y>=0){return;}
+        }*/
+        if(speed.y>=0){return;}
        // Vectors of ray from middle bottom
-       Vector2 rayFrom = new Vector2((transformComponent.x+demensionCompent.width/2)* PhysicsBodyLoader.getScale(), transformComponent.y*PhysicsBodyLoader.getScale());
+       Vector2 rayFrom = new Vector2((transformComponent.x+demensionCompent.width/2)* PhysicsBodyLoader.getScale(), (transformComponent.y+ rayGap)*PhysicsBodyLoader.getScale());
        Vector2 rayTo = new Vector2((transformComponent.x+demensionCompent.width/2)*PhysicsBodyLoader.getScale(), (transformComponent.y - raySize)*PhysicsBodyLoader.getScale());
 
        // Cast the ray
@@ -109,10 +112,10 @@ public class Ball implements IScript {
            @Override
            public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
                // Stop the player
-               transformComponent.y = 0;
+               speed.y = 0;
 
                // reposition player slightly upper the collision point
-               transformComponent.y = (point.y / PhysicsBodyLoader.getScale()+ 0.1f);
+               transformComponent.y = point.y / PhysicsBodyLoader.getScale()+ 0.1f;
 
                return 0;
            }
@@ -129,6 +132,7 @@ public class Ball implements IScript {
         collisionRect.setY(transformComponent.y);
 
     }
+
 
     //Getters and setters
     public float getX() {

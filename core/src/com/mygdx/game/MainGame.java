@@ -30,15 +30,17 @@ public class MainGame extends Game{
 	@Override
 	public void create () {
 
-		 viewport = new ExtendViewport(210,330);
+		viewport = new FitViewport(210,330);
 		sceneLoader = new SceneLoader();
 		sceneLoader.loadScene("MainScene", viewport);
 		//Temporary
+
+		ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
 		ball = new Ball(sceneLoader.world);
 		door1 = new Door();
-		ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
 		root.getChild("ball").addScript(ball);
 		root.getChild("door1").addScript(door1);
+
 
 	}
 
@@ -49,7 +51,7 @@ public class MainGame extends Game{
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		sceneLoader.getEngine().update(Gdx.graphics.getDeltaTime());
-		((OrthographicCamera)viewport.getCamera()).position.x = ball.getX()+ball.getRadius()/2f;
+		//((OrthographicCamera)viewport.getCamera()).position.x = ball.getX()+ball.getRadius()/2f;
 	}
 
 	public void update(){
