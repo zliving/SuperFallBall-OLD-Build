@@ -34,7 +34,7 @@ public class Ball implements IScript {
     private World world;
 
     private float velocity = 1.0f;
-    private float gravity = -9.0f;
+    private float gravity = -7.0f;
     private float radius = 12; //World units
     private float height, width;
     private float verticalSpeed = 1.5f;
