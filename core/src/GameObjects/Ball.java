@@ -52,6 +52,7 @@ public class Ball implements IScript {
         width = height = 2 * radius;
         ballEntity = entity;
         transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
+        //automatically find width and height of object based on sprite size. FANCY
         demensionCompent = ComponentRetriever.get(entity, DimensionsComponent.class);
         collisionRect = new Rectangle(transformComponent.x, transformComponent.y, width, height);
         speed = new Vector2(0,-100f);
@@ -80,6 +81,22 @@ public class Ball implements IScript {
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
             transformComponent.y -= velocity;
         }
+        //shitty x movement. Needs a gesture listoner class. Will implement later
+        if (Gdx.input.isTouched(0)) {
+            float changeCord = (Gdx.input.getX()*210)/Gdx.graphics.getWidth();
+            System.out.println("This is where the touch is--> "+changeCord);
+
+            System.out.println("This is where the ball is--> "+transformComponent.x);
+            if(changeCord <= (transformComponent.x+demensionCompent.width)&& changeCord >= (transformComponent.x-demensionCompent.width) ) {
+                if(changeCord<transformComponent.x) {
+                    transformComponent.x -= (changeCord * delta);
+                }
+                else{
+                    transformComponent.x += (changeCord * delta);
+                }
+                System.out.println("Ball is touched");
+            }
+        }
 
         speed.y += gravity*delta;
         transformComponent.y += (speed.y*delta);
@@ -104,8 +121,8 @@ public class Ball implements IScript {
         }*/
         if(speed.y>=0){return;}
        // Vectors of ray from middle bottom
-       Vector2 rayFrom = new Vector2((transformComponent.x+demensionCompent.width/2)* PhysicsBodyLoader.getScale(), (transformComponent.y+ rayGap)*PhysicsBodyLoader.getScale());
-       Vector2 rayTo = new Vector2((transformComponent.x+demensionCompent.width/2)*PhysicsBodyLoader.getScale(), (transformComponent.y - raySize)*PhysicsBodyLoader.getScale());
+       Vector2 rayFrom = new Vector2((transformComponent.x+demensionCompent.width/2)* PhysicsBodyLoader.getScale(), (transformComponent.y + rayGap) * PhysicsBodyLoader.getScale());
+       Vector2 rayTo = new Vector2((transformComponent.x + demensionCompent.width / 2) * PhysicsBodyLoader.getScale(), (transformComponent.y - raySize) * PhysicsBodyLoader.getScale());
 
        // Cast the ray
        world.rayCast(new RayCastCallback() {
