@@ -173,7 +173,7 @@ public class Ball implements IScript {
     }
 
     public float getHeight(){
-        return 2 * radius;
+        return demensionCompent.height;
     }
 
     public float getRadius() {
