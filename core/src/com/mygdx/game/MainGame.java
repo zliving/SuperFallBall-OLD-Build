@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.uwsoft.editor.renderer.SceneLoader;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
+import GameHelpers.GameGestureListener;
 import GameObjects.Ball;
 import GameObjects.Door;
 
@@ -30,6 +32,7 @@ public class MainGame extends Game{
 	@Override
 	public void create () {
 
+		Gdx.input.setInputProcessor(new GestureDetector(new GameGestureListener()));
 		viewport = new FitViewport(210,330);
 		sceneLoader = new SceneLoader();
 		sceneLoader.loadScene("MainScene", viewport);
