@@ -32,7 +32,7 @@ public class MainGame extends Game{
 	@Override
 	public void create () {
 
-		Gdx.input.setInputProcessor(new GestureDetector(new GameGestureListener()));
+
 		viewport = new FitViewport(210,330);
 		sceneLoader = new SceneLoader();
 		sceneLoader.loadScene("MainScene", viewport);
@@ -43,7 +43,7 @@ public class MainGame extends Game{
 		door1 = new Door();
 		root.getChild("ball").addScript(ball);
 		root.getChild("door1").addScript(door1);
-
+		Gdx.input.setInputProcessor(new GestureDetector(new GameGestureListener(ball)));
 
 	}
 

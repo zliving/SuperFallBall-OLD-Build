@@ -2,9 +2,22 @@ package GameHelpers;
 
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
+
+import java.util.Base64;
+
+import GameObjects.Ball;
 
 
 public class GameGestureListener implements GestureDetector.GestureListener {
+
+    private Ball ball;
+
+    public GameGestureListener(Ball ball)
+    {
+        super();
+        this.ball = ball;
+    }
 
     @Override
     public boolean touchDown(float x, float y, int pointer, int button) {
@@ -15,7 +28,8 @@ public class GameGestureListener implements GestureDetector.GestureListener {
     @Override
     public boolean tap(float x, float y, int count, int button) {
 
-        return false;
+        System.out.println("Screen was tapped");
+        return true;
     }
 
     @Override
@@ -27,6 +41,7 @@ public class GameGestureListener implements GestureDetector.GestureListener {
     @Override
     public boolean fling(float velocityX, float velocityY, int button) {
 
+       // Ball.setXSpeed(velocityX);
         return false;
     }
 

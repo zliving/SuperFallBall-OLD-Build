@@ -19,12 +19,14 @@ import com.uwsoft.editor.renderer.physics.PhysicsBodyLoader;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
+
 import org.w3c.dom.css.Rect;
 
+import GameHelpers.GameGestureListener;
 import sun.applet.Main;
 
 //New Branch merge test
-public class Ball implements IScript {
+public class Ball implements IScript{
 
     private Entity ballEntity;
     private TransformComponent transformComponent;
@@ -81,7 +83,8 @@ public class Ball implements IScript {
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
             transformComponent.y -= velocity;
         }
-        //shitty x movement. Needs a gesture listoner class. Will implement later
+
+       /* //shitty x movement. Needs a gesture listoner class. Will implement later
         if (Gdx.input.isTouched(0)) {
             float changeCord = (Gdx.input.getX()*210)/Gdx.graphics.getWidth();
             System.out.println("This is where the touch is--> "+changeCord);
@@ -96,7 +99,7 @@ public class Ball implements IScript {
                 }
                 System.out.println("Ball is touched");
             }
-        }
+        }*/
 
         speed.y += gravity*delta;
         transformComponent.y += (speed.y*delta);
@@ -183,4 +186,5 @@ public class Ball implements IScript {
     public Rectangle getCollisionRect(){
         return collisionRect;
     }
+
 }
