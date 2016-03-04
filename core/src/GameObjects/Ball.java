@@ -139,7 +139,7 @@ public class Ball implements IScript{
 
                // reposition player slightly upper the collision point
                transformComponent.y = point.y / PhysicsBodyLoader.getScale()+ 0.1f;
-
+                System.out.println(fixture.getUserData());
                return 0;
            }
        }, rayFrom, rayTo);
