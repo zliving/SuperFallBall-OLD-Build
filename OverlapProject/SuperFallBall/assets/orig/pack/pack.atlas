@@ -9,7 +9,15 @@ Spikes
   xy: 2, 216
   size: 220, 16
   split: 0, 0, 0, 16
+  pad: 151, 68, 0, 0
   orig: 220, 16
+  offset: 0, 0
+  index: -1
+background
+  rotate: false
+  xy: 85, 174
+  size: 1, 40
+  orig: 1, 40
   offset: 0, 0
   index: -1
 ball

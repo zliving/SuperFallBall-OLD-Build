@@ -13,6 +13,13 @@ Spikes
   orig: 220, 16
   offset: 0, 0
   index: -1
+background
+  rotate: false
+  xy: 85, 174
+  size: 1, 40
+  orig: 1, 40
+  offset: 0, 0
+  index: -1
 ball
   rotate: false
   xy: 2, 2
