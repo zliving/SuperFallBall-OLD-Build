@@ -41,16 +41,16 @@ public class GameGestureListener implements GestureDetector.GestureListener {
     @Override
     public boolean fling(float velocityX, float velocityY, int button) {
 
-        if(!ball.getDroppingStatus()) {
-            ball.setX(velocityX/2);
-        }
-        return true;
+
+        return false;
 
     }
 
     @Override
     public boolean pan(float x, float y, float deltaX, float deltaY) {
-
+        if(!ball.getDroppingStatus()) {
+            ball.setX(x);
+        }
         return false;
     }
 

@@ -85,27 +85,19 @@ public class Ball implements IScript{
             transformComponent.y -= velocity;
         }
 
-       /* //shitty x movement. Needs a gesture listoner class. Will implement later
-        if (Gdx.input.isTouched(0)) {
-            float changeCord = (Gdx.input.getX()*210)/Gdx.graphics.getWidth();
-            System.out.println("This is where the touch is--> "+changeCord);
-
-            System.out.println("This is where the ball is--> "+transformComponent.x);
-            if(changeCord <= (transformComponent.x+demensionCompent.width)&& changeCord >= (transformComponent.x-demensionCompent.width) ) {
-                if(changeCord<transformComponent.x) {
-                    transformComponent.x -= (changeCord * delta);
-                }
-                else{
-                    transformComponent.x += (changeCord * delta);
-                }
-                System.out.println("Ball is touched");
+        if(getDroppingStatus()) {
+            speed.y += gravity * delta;
+            transformComponent.y += (speed.y*delta);
+        }
+        else {
+            speed.x += speed.x * delta;
+            if(transformComponent.x >= 0 && transformComponent.x <= 330)
+            {
+            transformComponent.x += (speed.x*delta);
             }
-        }*/
+        }
 
-        speed.y += gravity*delta;
-        speed.x += speed.x*delta;
-        transformComponent.y += (speed.y*delta);
-        transformComponent.x += (speed.x*delta);
+
 
 
         updateBounds();
@@ -136,6 +128,7 @@ public class Ball implements IScript{
            public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
                // Stop the player
                speed.y = 0;
+               isDropping = false;
 
                // reposition player slightly upper the collision point
                transformComponent.y = point.y / PhysicsBodyLoader.getScale()+ 0.1f;
