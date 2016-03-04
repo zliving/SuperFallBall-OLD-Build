@@ -1,5 +1,6 @@
 package GameHelpers;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
@@ -12,6 +13,8 @@ import GameObjects.Ball;
 public class GameGestureListener implements GestureDetector.GestureListener {
 
     private Ball ball;
+    private float scaleX = 210.0f/(float)Gdx.graphics.getWidth();
+    private float scaleY = 330.0f/(float)Gdx.graphics.getHeight();
 
     public GameGestureListener(Ball ball)
     {
@@ -41,17 +44,20 @@ public class GameGestureListener implements GestureDetector.GestureListener {
     @Override
     public boolean fling(float velocityX, float velocityY, int button) {
 
-
         return false;
 
     }
 
     @Override
     public boolean pan(float x, float y, float deltaX, float deltaY) {
-        if(!ball.getDroppingStatus()) {
-            ball.setX(x);
+
+        System.out.println("Transform "+ball.transformComponent.y+" Scale Y "+y+" Demension component:"+ball.demensionCompent.height);
+        if(330-(y*scaleY) <= ball.transformComponent.y+ball.demensionCompent.height && 330-(y*scaleY)>=ball.transformComponent.y-ball.demensionCompent.height ) {
+            if (!ball.getDroppingStatus()) {
+                ball.setX(((deltaX * scaleX) + ball.getX()));
+            }
         }
-        return false;
+        return true;
     }
 
     @Override

@@ -29,10 +29,10 @@ import sun.applet.Main;
 public class Ball implements IScript{
 
     private Entity ballEntity;
-    private TransformComponent transformComponent;
+    public TransformComponent transformComponent;
     private float scaleUnits = 3.0f;
     private Rectangle collisionRect;
-    private DimensionsComponent demensionCompent;
+    public DimensionsComponent demensionCompent;
     private World world;
 
     private float velocity = 1.0f;
