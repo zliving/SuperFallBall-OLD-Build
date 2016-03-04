@@ -95,6 +95,13 @@ public class Ball implements IScript{
             {
             transformComponent.x += (speed.x*delta);
             }
+            else if(transformComponent.x <0) {
+                transformComponent.x =(320);
+            }
+            else
+            {
+                transformComponent.x = 0;
+            }
         }
 
 
