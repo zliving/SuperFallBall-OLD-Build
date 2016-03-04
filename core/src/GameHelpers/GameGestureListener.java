@@ -51,7 +51,7 @@ public class GameGestureListener implements GestureDetector.GestureListener {
     @Override
     public boolean pan(float x, float y, float deltaX, float deltaY) {
 
-        System.out.println("Transform "+ball.transformComponent.y+" Scale Y "+y+" Demension component:"+ball.demensionCompent.height);
+        //Only move the ball if the touch is between the balls y bounds. 
         if(330-(y*scaleY) <= ball.transformComponent.y+ball.demensionCompent.height && 330-(y*scaleY)>=ball.transformComponent.y-ball.demensionCompent.height ) {
             if (!ball.getDroppingStatus()) {
                 ball.setX(((deltaX * scaleX) + ball.getX()));
