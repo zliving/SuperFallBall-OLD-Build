@@ -6,11 +6,12 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.MainGame;
+import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
-public class Door implements IScript{
+public class Door implements IScript {
     //Size for Door object
     //These sizes are temporary
     private float width = 27.0f;
@@ -20,6 +21,7 @@ public class Door implements IScript{
     private float scale = 0;
     private float scaledWidth;
     private float scaledHeight;
+    private boolean doorOpen = true;
 
     private Rectangle collisionRect;
     //May need entity for later but it is currently unused right now.
@@ -27,6 +29,7 @@ public class Door implements IScript{
 
     //The transform component contains the position (x, y) of the door
     private TransformComponent transformComponent;
+    private DimensionsComponent dimensionsComponent;
 
     //Need to import the ball so that we can check for collision.
     private Ball ball;
@@ -35,6 +38,7 @@ public class Door implements IScript{
     public void init(Entity entity) {
         doorEntity = entity;
         transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
+        dimensionsComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
         scaledWidth = width - (2 * scale * width);
         scaledHeight = height - (2 * scale * height);
         collisionRect = new Rectangle(transformComponent.x + width * scale,
@@ -56,25 +60,25 @@ public class Door implements IScript{
 
     @Override
     public void act(float delta) {
-        if(isColliding(ball)){
+        if (isColliding(ball)) {
             System.out.println("Colliding");
             //Collides from the left side
-            if(ball.getCollisionRect().getX() <= collisionRect.getX()) {
+            if (ball.getCollisionRect().getX() <= collisionRect.getX()) {
                 ball.setX(transformComponent.x - ball.getWidth());
             }
 
             //Collides from the right side of the door
-            if(ball.getCollisionRect().getX() > collisionRect.getX()){
+            if (ball.getCollisionRect().getX() > collisionRect.getX()) {
                 ball.setX(transformComponent.x + width);
             }
 
             //Collides from the bottom
-            if(ball.getCollisionRect().getY() <= collisionRect.getY()){
+            if (ball.getCollisionRect().getY() <= collisionRect.getY()) {
                 ball.setY(transformComponent.y - ball.getHeight());
             }
 
             //Collides from the top
-            if(ball.getCollisionRect().getY() > collisionRect.getY()){
+            if (ball.getCollisionRect().getY() > collisionRect.getY()) {
                 ball.setY(transformComponent.y + height);
             }
         }
@@ -85,25 +89,30 @@ public class Door implements IScript{
 
     }
 
-    public boolean isColliding(Ball b){
+    public boolean isColliding(Ball b) {
         return b.getCollisionRect().overlaps(collisionRect);
     }
 
     //Getters and Setters
-    public float getX(){
+    public float getX() {
         return transformComponent.x;
     }
 
-    public float getY(){
+    public float getY() {
         return transformComponent.y;
     }
 
-    public float getWidth(){
+    public float getWidth() {
         return width;
     }
 
-    public float getHeight(){
+    public float getHeight() {
         return height;
+    }
+
+    public boolean isOpen()
+    {
+        return doorOpen;
     }
 
 }
