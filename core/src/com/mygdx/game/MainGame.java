@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.input.GestureDetector;
@@ -29,6 +30,7 @@ public class MainGame extends Game{
 	public Viewport viewport;
 
 
+
 	@Override
 	public void create () {
 
@@ -36,6 +38,7 @@ public class MainGame extends Game{
 		viewport = new FitViewport(210,330);
 		sceneLoader = new SceneLoader();
 		sceneLoader.loadScene("MainScene", viewport);
+
 		//Temporary
 
 		ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());

@@ -40,7 +40,7 @@ public class Ball implements IScript{
     private float radius = 12; //World units
     private float height, width;
     private float verticalSpeed = 1.5f;
-    private Vector2 speed;
+    public Vector2 speed;
 
     public boolean colliding = false;
 
@@ -102,7 +102,9 @@ public class Ball implements IScript{
         }*/
 
         speed.y += gravity*delta;
+        speed.x += speed.x*delta;
         transformComponent.y += (speed.y*delta);
+        transformComponent.x += (speed.x*delta);
 
 
         updateBounds();

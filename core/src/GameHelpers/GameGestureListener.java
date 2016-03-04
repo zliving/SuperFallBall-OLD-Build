@@ -41,7 +41,7 @@ public class GameGestureListener implements GestureDetector.GestureListener {
     @Override
     public boolean fling(float velocityX, float velocityY, int button) {
 
-       // Ball.setXSpeed(velocityX);
+        ball.setX(velocityX);
         return false;
     }
 
@@ -68,5 +68,7 @@ public class GameGestureListener implements GestureDetector.GestureListener {
 
         return false;
     }
+
+
 
 }
