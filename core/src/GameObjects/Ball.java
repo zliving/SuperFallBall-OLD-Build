@@ -42,6 +42,8 @@ public class Ball implements IScript{
     private float verticalSpeed = 1.5f;
     public Vector2 speed;
     private boolean isDropping = false;
+    private float scaleX = 210.0f/(float)Gdx.graphics.getWidth();
+    private float scaleY = 330.0f/(float)Gdx.graphics.getHeight();
 
     public boolean colliding = false;
 
@@ -59,6 +61,9 @@ public class Ball implements IScript{
         demensionCompent = ComponentRetriever.get(entity, DimensionsComponent.class);
         collisionRect = new Rectangle(transformComponent.x, transformComponent.y, width, height);
         speed = new Vector2(0,-100f);
+        //Ball will always start at the top of the screen
+        transformComponent.x=105-demensionCompent.width/2;
+        transformComponent.y=330-demensionCompent.height;
     }
 
     @Override
