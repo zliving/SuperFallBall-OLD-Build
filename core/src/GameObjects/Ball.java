@@ -35,15 +35,14 @@ public class Ball implements IScript{
     public DimensionsComponent demensionCompent;
     private World world;
 
-    private float velocity = 1.0f;
+
     private float gravity = -7.0f;
     private float radius = 12; //World units
     private float height, width;
-    private float verticalSpeed = 1.5f;
+
     public Vector2 speed;
     private boolean isDropping = false;
-    private float scaleX = 210.0f/(float)Gdx.graphics.getWidth();
-    private float scaleY = 330.0f/(float)Gdx.graphics.getHeight();
+
 
     public boolean colliding = false;
 
@@ -69,27 +68,6 @@ public class Ball implements IScript{
     @Override
     public void act(float delta) {
 
-        //transformComponent.y -= gravity;   //Gravity always acting on the ball;
-
-
-
-        //Movement
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            transformComponent.x -= velocity;
-        }
-
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-            transformComponent.x += velocity;
-        }
-
-        if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-            transformComponent.y += velocity;
-        }
-
-        if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-            transformComponent.y -= velocity;
-        }
-
         if(getDroppingStatus()) {
             speed.y += gravity * delta;
             transformComponent.y += (speed.y*delta);
@@ -110,15 +88,8 @@ public class Ball implements IScript{
         }
 
 
-
-
         updateBounds();
         rayCast();
-//        Testing
-//        System.out.println("Transform ball x: " + transformComponent.x);
-//        System.out.println("Transform ball y: " + transformComponent.y);
-//        System.out.println("Collision ball x: " + collisionRect.getX());
-//        System.out.println("Collision ball y: " + collisionRect.getY());
 
     }
 
