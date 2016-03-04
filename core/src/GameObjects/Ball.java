@@ -41,6 +41,7 @@ public class Ball implements IScript{
     private float height, width;
     private float verticalSpeed = 1.5f;
     public Vector2 speed;
+    private boolean isDropping = false;
 
     public boolean colliding = false;
 
@@ -188,5 +189,8 @@ public class Ball implements IScript{
     public Rectangle getCollisionRect(){
         return collisionRect;
     }
+
+    public boolean getDroppingStatus()
+    {return isDropping;}
 
 }
