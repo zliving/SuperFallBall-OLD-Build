@@ -2,6 +2,8 @@ package GameObjects;
 
 import com.mygdx.game.MainGame;
 
+import GameHelpers.GameGestureListener;
+
 public class DoorLink {
 
     private Door door1;

@@ -3,19 +3,20 @@ package GameHelpers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.MainGame;
 
 import java.util.ArrayList;
 
 import GameObjects.Ball;
 import GameObjects.Door;
+import sun.applet.Main;
 
 
 public class GameGestureListener implements GestureDetector.GestureListener {
 
     private Ball ball;
-    private float scaleX = 210.0f/(float)Gdx.graphics.getWidth();
-    private float scaleY = 330.0f/(float)Gdx.graphics.getHeight();
     private ArrayList<Door> doors;
+    private float scale = 1.0f / 3.0f;
 
     public GameGestureListener(Ball ball, ArrayList<Door> d)
     {
@@ -32,7 +33,20 @@ public class GameGestureListener implements GestureDetector.GestureListener {
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
+        for(int i = 0; i < doors.size(); i++){
+            Door currentDoor = doors.get(i);
+            System.out.println(MainGame.worldHeightUnits - y * scale);
+            System.out.println(currentDoor.getY());
 
+            if(x * scale >= currentDoor.getX()
+                    && x * scale <= currentDoor.getX() + currentDoor.getWidth()
+                    && MainGame.worldHeightUnits - y * scale >= currentDoor.getY()
+                    && MainGame.worldHeightUnits - y * scale <= currentDoor.getY() + currentDoor.getHeight()){
+
+                System.out.println("Door: " + (i + 1) + " was tapped.");
+                currentDoor.switchState();
+            }
+        }
         System.out.println("Screen was tapped");
         return true;
     }
@@ -54,15 +68,15 @@ public class GameGestureListener implements GestureDetector.GestureListener {
     public boolean pan(float x, float y, float deltaX, float deltaY) {
 
         //Only move the ball if the touch is between the balls y bounds.
-        if(330 - (y * scaleY) <= ball.transformComponent.y + ball.dimensionsComponent.height
-                && 330 - (y * scaleY) >= ball.transformComponent.y - ball.dimensionsComponent.height) {
+        if(MainGame.worldHeightUnits - (y * scale) <= ball.getY() + ball.getHeight()
+                && MainGame.worldHeightUnits - (y * scale) >= ball.getY() - ball.getHeight()) {
             if (!ball.getDroppingStatus()) {
-                ball.setX(((deltaX * scaleX) + ball.getX()));
+                ball.setX(((deltaX * scale) + ball.getX()));
             }
         }
 
         //Moving the ball in the y direction for testing
-        ball.setY((-deltaY * scaleY) + ball.getY());
+        ball.setY((-deltaY * scale) + ball.getY());
 
         return true;
     }

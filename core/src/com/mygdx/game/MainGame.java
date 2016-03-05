@@ -35,13 +35,16 @@ public class MainGame extends Game{
 	private ArrayList<Door> doors;
 	public Viewport viewport;
 
+	public static final float worldWidthUnits = 213.33f;
+	public static final float worldHeightUnits = 320.0f;
 
+	public static final float scaleWorld = 1 / 3.0f;
 
 	@Override
 	public void create () {
 
 
-		viewport = new FitViewport(210,330);
+		viewport = new FitViewport(worldWidthUnits,worldHeightUnits);
 		sceneLoader = new SceneLoader();
 		sceneLoader.loadScene("MainScene", viewport);
 
@@ -61,6 +64,7 @@ public class MainGame extends Game{
 		doors.add(door1);
 		doors.add(door2);
 
+
 		System.out.println("door1");
 		System.out.println("x: " + door1.getX());
 		System.out.println("y: " + door1.getY());
@@ -75,6 +79,8 @@ public class MainGame extends Game{
 
 		System.out.println("door1 from link: " + link1.getDoor1().getX());
 		System.out.println("door2 from link: " + link1.getDoor2().getX());
+		System.out.println("world scale " + GAME_WIDTH * scaleWorld);
+		System.out.println("world scale " + GAME_HEIGHT * scaleWorld);
 
 		Gdx.input.setInputProcessor(new GestureDetector(new GameGestureListener(ball, doors)));
 
