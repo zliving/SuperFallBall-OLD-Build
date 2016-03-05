@@ -13,6 +13,8 @@ public class DoorLink {
     private final int collisionWithDoor1 = 1;
     private final int collisionWithDoor2 = 2;
 
+    private boolean doorState = false;
+
     public DoorLink(Door d1, Door d2){
         door1 = d1;
         door2 = d2;
@@ -32,6 +34,14 @@ public class DoorLink {
         if(isColliding()){
             int cDoor = getCollisionDoor();
             System.out.println(cDoor);
+
+            if(cDoor == collisionWithDoor1 && doorState){
+                ball.setX(door2.getX());
+                ball.setY(door2.getY() - ball.getHeight());
+            } else if(cDoor == collisionWithDoor2 && doorState){
+                ball.setX(door1.getY());
+                ball.setY(door1.getY() - ball.getHeight());
+            }
         }
 
     }
@@ -51,6 +61,17 @@ public class DoorLink {
         } else {
             return collisionWithDoor2;
         }
+    }
+
+    public boolean isOpen()
+    {
+        return doorState;
+    }
+
+    public void switchState(){
+        System.out.println("door is current open?: " + isOpen());
+        doorState = !doorState;
+        System.out.println("door is current open now?: " + isOpen());
     }
 
 }

@@ -9,20 +9,20 @@ import java.util.ArrayList;
 
 import GameObjects.Ball;
 import GameObjects.Door;
-import sun.applet.Main;
+import GameObjects.DoorLink;
 
 
 public class GameGestureListener implements GestureDetector.GestureListener {
 
     private Ball ball;
-    private ArrayList<Door> doors;
+    private ArrayList<DoorLink> doorLinks;
     private float scale = 1.0f / 3.0f;
 
-    public GameGestureListener(Ball ball, ArrayList<Door> d)
+    public GameGestureListener(Ball ball, ArrayList<DoorLink> d)
     {
         super();
         this.ball = ball;
-        this.doors = d;
+        this.doorLinks = d;
     }
 
     @Override
@@ -33,18 +33,23 @@ public class GameGestureListener implements GestureDetector.GestureListener {
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
-        for(int i = 0; i < doors.size(); i++){
-            Door currentDoor = doors.get(i);
-            System.out.println(MainGame.worldHeightUnits - y * scale);
-            System.out.println(currentDoor.getY());
+        for(int i = 0; i < doorLinks.size(); i++){
+            DoorLink currentLink = doorLinks.get(i);
 
-            if(x * scale >= currentDoor.getX()
-                    && x * scale <= currentDoor.getX() + currentDoor.getWidth()
-                    && MainGame.worldHeightUnits - y * scale >= currentDoor.getY()
-                    && MainGame.worldHeightUnits - y * scale <= currentDoor.getY() + currentDoor.getHeight()){
+            if(x * scale >= currentLink.getDoor1().getX()
+                    && x * scale <= currentLink.getDoor1().getX() + currentLink.getDoor1().getWidth()
+                    && MainGame.worldHeightUnits - y * scale >= currentLink.getDoor1().getY()
+                    && MainGame.worldHeightUnits - y * scale <= currentLink.getDoor1().getY() + currentLink.getDoor1().getY()){
 
-                System.out.println("Door: " + (i + 1) + " was tapped.");
-                currentDoor.switchState();
+                System.out.println("Door: " + (1) + " was tapped.");
+                currentLink.switchState();
+            } else if(x * scale >= currentLink.getDoor2().getX()
+                    && x * scale <= currentLink.getDoor2().getX() + currentLink.getDoor2().getWidth()
+                    && MainGame.worldHeightUnits - y * scale >= currentLink.getDoor2().getY()
+                    && MainGame.worldHeightUnits - y * scale <= currentLink.getDoor2().getY() + currentLink.getDoor2().getY()){
+
+                System.out.println("Door: " + 2 + " was tapped.");
+                currentLink.switchState();
             }
         }
         System.out.println("Screen was tapped");

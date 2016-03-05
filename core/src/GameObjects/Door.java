@@ -122,15 +122,6 @@ public class Door implements IScript{
         return height;
     }
 
-    public boolean isOpen()
-    {
-        return doorOpen;
-    }
 
-    public void switchState(){
-        System.out.println("door is current open?: " + isOpen());
-        doorOpen = !doorOpen;
-        System.out.println("door is current open now?: " + isOpen());
-    }
 
 }

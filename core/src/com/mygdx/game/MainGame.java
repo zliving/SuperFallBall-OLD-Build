@@ -32,7 +32,7 @@ public class MainGame extends Game{
 	private Door door1;
 	private Door door2;
 	private DoorLink link1;
-	private ArrayList<Door> doors;
+	private ArrayList<DoorLink> doorLinks;
 	public Viewport viewport;
 
 	public static final float worldWidthUnits = 213.33f;
@@ -60,10 +60,8 @@ public class MainGame extends Game{
 		root.getChild("door1").addScript(door1);
 		root.getChild("door2").addScript(door2);
 
-		doors = new ArrayList<Door>();
-		doors.add(door1);
-		doors.add(door2);
-
+		doorLinks = new ArrayList<DoorLink>();
+		doorLinks.add(link1);
 
 		System.out.println("door1");
 		System.out.println("x: " + door1.getX());
@@ -82,7 +80,7 @@ public class MainGame extends Game{
 		System.out.println("world scale " + GAME_WIDTH * scaleWorld);
 		System.out.println("world scale " + GAME_HEIGHT * scaleWorld);
 
-		Gdx.input.setInputProcessor(new GestureDetector(new GameGestureListener(ball, doors)));
+		Gdx.input.setInputProcessor(new GestureDetector(new GameGestureListener(ball, doorLinks)));
 
 	}
 
