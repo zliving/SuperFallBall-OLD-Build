@@ -4,7 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 
+import java.util.ArrayList;
+
 import GameObjects.Ball;
+import GameObjects.Door;
 
 
 public class GameGestureListener implements GestureDetector.GestureListener {
@@ -12,11 +15,13 @@ public class GameGestureListener implements GestureDetector.GestureListener {
     private Ball ball;
     private float scaleX = 210.0f/(float)Gdx.graphics.getWidth();
     private float scaleY = 330.0f/(float)Gdx.graphics.getHeight();
+    private ArrayList<Door> doors;
 
-    public GameGestureListener(Ball ball)
+    public GameGestureListener(Ball ball, ArrayList<Door> d)
     {
         super();
         this.ball = ball;
+        this.doors = d;
     }
 
     @Override
@@ -49,11 +54,16 @@ public class GameGestureListener implements GestureDetector.GestureListener {
     public boolean pan(float x, float y, float deltaX, float deltaY) {
 
         //Only move the ball if the touch is between the balls y bounds.
-        if(330-(y*scaleY) <= ball.transformComponent.y+ball.dimensionsComponent.height && 330-(y*scaleY)>=ball.transformComponent.y-ball.dimensionsComponent.height ) {
+        if(330 - (y * scaleY) <= ball.transformComponent.y + ball.dimensionsComponent.height
+                && 330 - (y * scaleY) >= ball.transformComponent.y - ball.dimensionsComponent.height) {
             if (!ball.getDroppingStatus()) {
                 ball.setX(((deltaX * scaleX) + ball.getX()));
             }
         }
+
+        //Moving the ball in the y direction for testing
+        ball.setY((-deltaY * scaleY) + ball.getY());
+
         return true;
     }
 

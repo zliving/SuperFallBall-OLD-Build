@@ -50,7 +50,7 @@ public class Ball implements IScript{
         //automatically find width and height of object based on sprite size. FANCY
         dimensionsComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
 
-        speed = new Vector2(0, -100f);
+        speed = new Vector2(0, 0);
         //Ball will always start at the top of the screen
         transformComponent.x = 105 - dimensionsComponent.width / 2;
         transformComponent.y = 330 - dimensionsComponent.height;
@@ -79,6 +79,7 @@ public class Ball implements IScript{
             {
                 transformComponent.x = 0;
             }
+
         }
 
 

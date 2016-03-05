@@ -15,9 +15,12 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.uwsoft.editor.renderer.SceneLoader;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
+import java.util.ArrayList;
+
 import GameHelpers.GameGestureListener;
 import GameObjects.Ball;
 import GameObjects.Door;
+import GameObjects.DoorLink;
 
 
 public class MainGame extends Game{
@@ -28,6 +31,8 @@ public class MainGame extends Game{
 	public static Ball ball;
 	private Door door1;
 	private Door door2;
+	private DoorLink link1;
+	private ArrayList<Door> doors;
 	public Viewport viewport;
 
 
@@ -46,10 +51,15 @@ public class MainGame extends Game{
 		ball = new Ball(sceneLoader.world);
 		door1 = new Door();
 		door2 = new Door();
+		link1 = new DoorLink(door1, door2);
 
 		root.getChild("ball").addScript(ball);
 		root.getChild("door1").addScript(door1);
 		root.getChild("door2").addScript(door2);
+
+		doors = new ArrayList<Door>();
+		doors.add(door1);
+		doors.add(door2);
 
 		System.out.println("door1");
 		System.out.println("x: " + door1.getX());
@@ -63,7 +73,10 @@ public class MainGame extends Game{
 		System.out.println("width " + door2.getWidth());
 		System.out.println("height " + door2.getHeight());
 
-		Gdx.input.setInputProcessor(new GestureDetector(new GameGestureListener(ball)));
+		System.out.println("door1 from link: " + link1.getDoor1().getX());
+		System.out.println("door2 from link: " + link1.getDoor2().getX());
+
+		Gdx.input.setInputProcessor(new GestureDetector(new GameGestureListener(ball, doors)));
 
 	}
 
@@ -74,9 +87,9 @@ public class MainGame extends Game{
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		sceneLoader.getEngine().update(Gdx.graphics.getDeltaTime());
-		//((OrthographicCamera)viewport.getCamera()).position.x = ball.getX()+ball.getRadius()/2f;
 	}
 
 	public void update(){
+		link1.update();
 	}
 }

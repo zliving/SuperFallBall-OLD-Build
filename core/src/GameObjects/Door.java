@@ -4,14 +4,16 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.MainGame;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
-public class Door implements IScript {
+public class Door implements IScript{
     //Size for Door object
     //These sizes are temporary
     private float width = 27.0f;
@@ -19,7 +21,7 @@ public class Door implements IScript {
 
     //For collision rectangle
     private float scale = 3.0f;
-    private boolean doorOpen = true;
+    private boolean doorOpen = false;
 
     private Rectangle collisionRect;
     //May need entity for later but it is currently unused right now.
@@ -34,6 +36,7 @@ public class Door implements IScript {
 
     //For drawing the collision rectangle for testing
     private ShapeRenderer shapeRenderer;
+
 
     @Override
     public void init(Entity entity) {
@@ -71,24 +74,25 @@ public class Door implements IScript {
         if (isColliding(ball)) {
             System.out.println("Colliding");
             //Collides from the left side
-            if (ball.getCollisionRect().getX() <= collisionRect.getX()) {
-                ball.setX(transformComponent.x - ball.getWidth());
-            }
+//            if (ball.getCollisionRect().getX() <= collisionRect.getX()) {
+//                ball.setX(transformComponent.x - ball.getWidth());
+//            }
+//
+//            //Collides from the right side of the door
+//            if (ball.getCollisionRect().getX() > collisionRect.getX()) {
+//                ball.setX(transformComponent.x + width);
+//            }
+//
+//            //Collides from the bottom
+//            if (ball.getCollisionRect().getY() <= collisionRect.getY()) {
+//                ball.setY(transformComponent.y - ball.getHeight());
+//            }
+//
+//            //Collides from the top
+//            if (ball.getCollisionRect().getY() > collisionRect.getY()) {
+//                ball.setY(transformComponent.y + height);
+//            }
 
-            //Collides from the right side of the door
-            if (ball.getCollisionRect().getX() > collisionRect.getX()) {
-                ball.setX(transformComponent.x + width);
-            }
-
-            //Collides from the bottom
-            if (ball.getCollisionRect().getY() <= collisionRect.getY()) {
-                ball.setY(transformComponent.y - ball.getHeight());
-            }
-
-            //Collides from the top
-            if (ball.getCollisionRect().getY() > collisionRect.getY()) {
-                ball.setY(transformComponent.y + height);
-            }
         }
     }
 
