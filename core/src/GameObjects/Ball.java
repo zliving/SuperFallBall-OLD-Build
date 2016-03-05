@@ -2,28 +2,17 @@ package GameObjects;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.game.MainGame;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
-import com.uwsoft.editor.renderer.components.PolygonComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.physics.PhysicsBodyLoader;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
-
-
-import org.w3c.dom.css.Rect;
-
-import GameHelpers.GameGestureListener;
-import sun.applet.Main;
 
 //New Branch merge test
 public class Ball implements IScript{
@@ -31,8 +20,8 @@ public class Ball implements IScript{
     private Entity ballEntity;
     public TransformComponent transformComponent;
     private float scaleUnits = 3.0f;
-    private Rectangle collisionRect;
-    public DimensionsComponent demensionCompent;
+    public Rectangle collisionRect;
+    public DimensionsComponent dimensionsComponent;
     private World world;
 
 
@@ -46,6 +35,8 @@ public class Ball implements IScript{
 
     public boolean colliding = false;
 
+    private ShapeRenderer shapeRenderer;
+
     public Ball(World world)
     {
         this.world = world;
@@ -57,15 +48,17 @@ public class Ball implements IScript{
         ballEntity = entity;
         transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
         //automatically find width and height of object based on sprite size. FANCY
-        demensionCompent = ComponentRetriever.get(entity, DimensionsComponent.class);
-        collisionRect = new Rectangle(transformComponent.x, transformComponent.y, width, height);
-        speed = new Vector2(0,-100f);
-        //Ball will always start at the top of the screen
-        transformComponent.x=105-demensionCompent.width/2;
-        transformComponent.y=330-demensionCompent.height;
-    }
+        dimensionsComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
 
-    @Override
+        speed = new Vector2(0, -100f);
+        //Ball will always start at the top of the screen
+        transformComponent.x = 105 - dimensionsComponent.width / 2;
+        transformComponent.y = 330 - dimensionsComponent.height;
+        collisionRect = new Rectangle(transformComponent.x, transformComponent.y, dimensionsComponent.width,
+                dimensionsComponent.height);
+
+        shapeRenderer = new ShapeRenderer();
+    }
     public void act(float delta) {
 
         if(getDroppingStatus()) {
@@ -74,9 +67,10 @@ public class Ball implements IScript{
         }
         else {
             speed.x += speed.x * delta;
+
             if(transformComponent.x >= 0 && transformComponent.x <= 330)
             {
-            transformComponent.x += (speed.x*delta);
+                transformComponent.x += (speed.x*delta);
             }
             else if(transformComponent.x <0) {
                 transformComponent.x =(320);
@@ -94,7 +88,7 @@ public class Ball implements IScript{
     }
 
    private void rayCast() {
-        float rayGap = demensionCompent.height/2;
+        float rayGap = dimensionsComponent.height/2;
         float raySize =  -(speed.y+Gdx.graphics.getDeltaTime())*Gdx.graphics.getDeltaTime();
 
       /*  if(raySize<5f){
@@ -102,8 +96,8 @@ public class Ball implements IScript{
         }*/
         if(speed.y>=0){return;}
        // Vectors of ray from middle bottom
-       Vector2 rayFrom = new Vector2((transformComponent.x+demensionCompent.width/2)* PhysicsBodyLoader.getScale(), (transformComponent.y + rayGap) * PhysicsBodyLoader.getScale());
-       Vector2 rayTo = new Vector2((transformComponent.x + demensionCompent.width / 2) * PhysicsBodyLoader.getScale(), (transformComponent.y - raySize) * PhysicsBodyLoader.getScale());
+       Vector2 rayFrom = new Vector2((transformComponent.x+ dimensionsComponent.width/2)* PhysicsBodyLoader.getScale(), (transformComponent.y + rayGap) * PhysicsBodyLoader.getScale());
+       Vector2 rayTo = new Vector2((transformComponent.x + dimensionsComponent.width / 2) * PhysicsBodyLoader.getScale(), (transformComponent.y - raySize) * PhysicsBodyLoader.getScale());
 
        // Cast the ray
        world.rayCast(new RayCastCallback() {
@@ -151,11 +145,11 @@ public class Ball implements IScript{
     }
 
     public float getWidth(){
-        return demensionCompent.width;
+        return dimensionsComponent.width;
     }
 
     public float getHeight(){
-        return demensionCompent.height;
+        return dimensionsComponent.height;
     }
 
     public float getRadius() {

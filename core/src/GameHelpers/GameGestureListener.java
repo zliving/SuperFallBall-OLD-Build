@@ -3,9 +3,6 @@ package GameHelpers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
-
-import java.util.Base64;
 
 import GameObjects.Ball;
 
@@ -52,7 +49,7 @@ public class GameGestureListener implements GestureDetector.GestureListener {
     public boolean pan(float x, float y, float deltaX, float deltaY) {
 
         //Only move the ball if the touch is between the balls y bounds.
-        if(330-(y*scaleY) <= ball.transformComponent.y+ball.demensionCompent.height && 330-(y*scaleY)>=ball.transformComponent.y-ball.demensionCompent.height ) {
+        if(330-(y*scaleY) <= ball.transformComponent.y+ball.dimensionsComponent.height && 330-(y*scaleY)>=ball.transformComponent.y-ball.dimensionsComponent.height ) {
             if (!ball.getDroppingStatus()) {
                 ball.setX(((deltaX * scaleX) + ball.getX()));
             }

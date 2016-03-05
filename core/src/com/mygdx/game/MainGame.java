@@ -27,6 +27,7 @@ public class MainGame extends Game{
 	//Temporary
 	public static Ball ball;
 	private Door door1;
+	private Door door2;
 	public Viewport viewport;
 
 
@@ -44,8 +45,24 @@ public class MainGame extends Game{
 		ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
 		ball = new Ball(sceneLoader.world);
 		door1 = new Door();
+		door2 = new Door();
+
 		root.getChild("ball").addScript(ball);
 		root.getChild("door1").addScript(door1);
+		root.getChild("door2").addScript(door2);
+
+		System.out.println("door1");
+		System.out.println("x: " + door1.getX());
+		System.out.println("y: " + door1.getY());
+		System.out.println("width " + door1.getWidth());
+		System.out.println("height " + door1.getHeight());
+
+		System.out.println("door2");
+		System.out.println("x: " + door2.getX());
+		System.out.println("y: " + door2.getY());
+		System.out.println("width " + door2.getWidth());
+		System.out.println("height " + door2.getHeight());
+
 		Gdx.input.setInputProcessor(new GestureDetector(new GameGestureListener(ball)));
 
 	}

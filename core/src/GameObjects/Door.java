@@ -18,9 +18,7 @@ public class Door implements IScript {
     private float height = 46.0f;
 
     //For collision rectangle
-    private float scale = 0;
-    private float scaledWidth;
-    private float scaledHeight;
+    private float scale = 3.0f;
     private boolean doorOpen = true;
 
     private Rectangle collisionRect;
@@ -34,32 +32,42 @@ public class Door implements IScript {
     //Need to import the ball so that we can check for collision.
     private Ball ball;
 
+    //For drawing the collision rectangle for testing
+    private ShapeRenderer shapeRenderer;
+
     @Override
     public void init(Entity entity) {
         doorEntity = entity;
         transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
         dimensionsComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
-        scaledWidth = width - (2 * scale * width);
-        scaledHeight = height - (2 * scale * height);
-        collisionRect = new Rectangle(transformComponent.x + width * scale,
-                transformComponent.y + height * scale, scaledWidth, scaledHeight);
+        collisionRect = new Rectangle(transformComponent.x, transformComponent.y,
+                dimensionsComponent.width, dimensionsComponent.height);
 
-        System.out.println("x: " + transformComponent.x);
-        System.out.println("y: " + transformComponent.y);
-        System.out.println("x coll: " + collisionRect.getX());
-        System.out.println("y coll: " + collisionRect.getY());
-        System.out.println("coll width: " + collisionRect.getWidth());
-        System.out.println("coll height: " + collisionRect.getHeight());
+        shapeRenderer = new ShapeRenderer();
         ball = MainGame.ball;
-        //Testing for the collision rectangle
-        System.out.println("collision x: " + collisionRect.getX());
-        System.out.println("collision y: " + collisionRect.getY());
-        System.out.println("Collision width: " + collisionRect.getWidth());
-        System.out.println("Collision height: " + collisionRect.getHeight());
+
+        //Testing for the collision rectangle with transform componenet
+//        System.out.println("x: " + transformComponent.x);
+//        System.out.println("y: " + transformComponent.y);
+//        System.out.println("x coll: " + collisionRect.getX());
+//        System.out.println("y coll: " + collisionRect.getY());
+//        System.out.println("coll width: " + collisionRect.getWidth());
+//        System.out.println("coll height: " + collisionRect.getHeight());
+//        System.out.println("collision x: " + collisionRect.getX());
+//        System.out.println("collision y: " + collisionRect.getY());
+//        System.out.println("Collision width: " + collisionRect.getWidth());
+//        System.out.println("Collision height: " + collisionRect.getHeight());
+
     }
 
     @Override
     public void act(float delta) {
+        //Testing for collision rect
+//        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+//        shapeRenderer.rect(collisionRect.x * scale, collisionRect.y * scale,
+//                collisionRect.width * scale, collisionRect.height * scale);
+//        shapeRenderer.end();
+
         if (isColliding(ball)) {
             System.out.println("Colliding");
             //Collides from the left side
