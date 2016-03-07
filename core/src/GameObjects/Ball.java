@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.MainGame;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.physics.PhysicsBodyLoader;
@@ -30,7 +31,7 @@ public class Ball implements IScript{
     private float height, width;
 
     public Vector2 speed;
-    private boolean isDropping = false;
+    private boolean isDropping = true;
 
 
     public boolean colliding = false;
@@ -52,8 +53,8 @@ public class Ball implements IScript{
 
         speed = new Vector2(0, 0);
         //Ball will always start at the top of the screen
-        transformComponent.x = 105 - dimensionsComponent.width / 2;
-        transformComponent.y = 330 - dimensionsComponent.height;
+        transformComponent.x = (MainGame.worldWidthUnits/2) - dimensionsComponent.width / 2;
+        transformComponent.y = MainGame.worldHeightUnits - dimensionsComponent.height;
         collisionRect = new Rectangle(transformComponent.x, transformComponent.y, dimensionsComponent.width,
                 dimensionsComponent.height);
 
@@ -64,23 +65,22 @@ public class Ball implements IScript{
         if(getDroppingStatus()) {
             speed.y += gravity * delta;
             transformComponent.y += (speed.y*delta);
-        }
-        else {
-            speed.x += speed.x * delta;
+            speed.x+=speed.x * delta;
 
-            if(transformComponent.x >= 0 && transformComponent.x <= 330)
+        }
+
+
+            if(transformComponent.x >= 0 && transformComponent.x <= MainGame.worldWidthUnits)
             {
                 transformComponent.x += (speed.x*delta);
             }
             else if(transformComponent.x <0) {
-                transformComponent.x =(320);
+                transformComponent.x =(MainGame.worldWidthUnits - dimensionsComponent.width);
             }
             else
             {
                 transformComponent.x = 0;
             }
-
-        }
 
 
         updateBounds();
