@@ -52,8 +52,8 @@ public class MainGame extends Game{
 
 		ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
 		ball = new Ball(sceneLoader.world);
-		door1 = new Door();
-		door2 = new Door();
+		door1 = new Door(sceneLoader.world);
+		door2 = new Door(sceneLoader.world);
 		link1 = new DoorLink(door1, door2);
 
 		root.getChild("ball").addScript(ball);

@@ -54,7 +54,16 @@ public class GameGestureListener implements GestureDetector.GestureListener {
             }
         }
         System.out.println("Screen was tapped");
+
+        if(!ball.getDroppingStatus()){
+        ball.setDroppingStatus(true);
+        }
+        else
+        {
+            ball.setDroppingStatus(false);
+        }
         return true;
+
     }
 
     @Override
@@ -72,15 +81,15 @@ public class GameGestureListener implements GestureDetector.GestureListener {
 
     @Override
     public boolean pan(float x, float y, float deltaX, float deltaY) {
-            System.out.println(scaleY);
+            //System.out.println(scaleY);
             System.out.println("Game height:"+ MainGame.worldHeightUnits+" Y Touched"+(MainGame.worldHeightUnits-(y*scaleY
             ))+" Ball Y "+ball.getY());
         //Only move the ball if the touch is between the balls y bounds.
-        if(MainGame.worldHeightUnits - (y * scaleY) <= ball.getY() + ball.getHeight()
-                && MainGame.worldHeightUnits - (y * scaleY) >= ball.getY() - ball.getHeight()) {
+        if(MainGame.worldHeightUnits - (y * scaleY) <= ball.getY() + ball.getHeight()+10
+                && MainGame.worldHeightUnits - (y * scaleY) >= ball.getY() - ball.getHeight()-10) {
             System.out.println("Is touching ball");
             if (!ball.getDroppingStatus()) {
-                ball.setX(((deltaX * scaleY) + ball.getX()));
+                ball.setX(((deltaX * scaleX) + ball.getX()));
             }
         }
 

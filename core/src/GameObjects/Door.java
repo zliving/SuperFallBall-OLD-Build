@@ -7,9 +7,13 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.RayCastCallback;
+import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.MainGame;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
+import com.uwsoft.editor.renderer.physics.PhysicsBodyLoader;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
@@ -33,9 +37,15 @@ public class Door implements IScript{
 
     //Need to import the ball so that we can check for collision.
     private Ball ball;
+    private World world;
 
     //For drawing the collision rectangle for testing
     private ShapeRenderer shapeRenderer;
+
+    public Door (World world)
+    {
+        this.world = world;
+    }
 
 
     @Override
@@ -94,11 +104,32 @@ public class Door implements IScript{
 //            }
 
         }
+        rayCast();
     }
 
     @Override
     public void dispose() {
 
+    }
+
+    private void rayCast() {
+        float rayGap = dimensionsComponent.width/2;
+        float raySize =  5f;
+
+        // Vectors of ray from middle bottom
+        Vector2 rayFrom = new Vector2((transformComponent.x+ dimensionsComponent.width/2)* PhysicsBodyLoader.getScale(), (transformComponent.y + rayGap) * PhysicsBodyLoader.getScale());
+        Vector2 rayTo = new Vector2((transformComponent.x + dimensionsComponent.width / 2) * PhysicsBodyLoader.getScale(), (transformComponent.y - raySize) * PhysicsBodyLoader.getScale());
+
+        // Cast the ray
+        world.rayCast(new RayCastCallback() {
+            @Override
+            public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
+
+                System.out.println("Testing");
+
+                return 1;
+            }
+        }, rayFrom, rayTo);
     }
 
     public boolean isColliding(Ball b) {
