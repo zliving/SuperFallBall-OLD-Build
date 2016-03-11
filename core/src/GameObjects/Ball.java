@@ -70,11 +70,11 @@ public class Ball implements IScript{
         }
 
 
-            if(transformComponent.x >= 0 && transformComponent.x <= MainGame.worldWidthUnits)
+            if(transformComponent.x >= (0-dimensionsComponent.width) && transformComponent.x <= MainGame.worldWidthUnits)
             {
                 transformComponent.x += (speed.x*delta);
             }
-            else if(transformComponent.x <0) {
+            else if(transformComponent.x <(0-dimensionsComponent.width)) {
                 transformComponent.x =(MainGame.worldWidthUnits - dimensionsComponent.width);
             }
             else
