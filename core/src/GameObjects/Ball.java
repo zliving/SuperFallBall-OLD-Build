@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.MainGame;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
+import com.uwsoft.editor.renderer.components.physics.PhysicsBodyComponent;
 import com.uwsoft.editor.renderer.physics.PhysicsBodyLoader;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
@@ -23,6 +24,7 @@ public class Ball implements IScript{
     private float scaleUnits = 3.0f;
     public Rectangle collisionRect;
     public DimensionsComponent dimensionsComponent;
+    public PhysicsBodyComponent physicsBodyComponent;
     private World world;
 
 
@@ -50,6 +52,7 @@ public class Ball implements IScript{
         transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
         //automatically find width and height of object based on sprite size. FANCY
         dimensionsComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
+        physicsBodyComponent = ComponentRetriever.get(entity, PhysicsBodyComponent.class);
 
         speed = new Vector2(0, -60);
         //Ball will always start at the top of the screen
@@ -109,8 +112,8 @@ public class Ball implements IScript{
                isDropping = false;
 
                // reposition player slightly upper the collision point
-               transformComponent.y = point.y / PhysicsBodyLoader.getScale()+ 0.1f;
-                System.out.println(fixture.getUserData());
+               transformComponent.y = point.y / PhysicsBodyLoader.getScale() + 0.1f;
+               System.out.println(fixture.getUserData());
                return 0;
            }
        }, rayFrom, rayTo);
