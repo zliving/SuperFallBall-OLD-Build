@@ -1,8 +1,6 @@
 package GameObjects;
 
-import com.mygdx.game.MainGame;
-
-import GameHelpers.GameGestureListener;
+import Scenes.PlayScene;
 
 public class DoorLink {
 
@@ -18,7 +16,7 @@ public class DoorLink {
     public DoorLink(Door d1, Door d2){
         door1 = d1;
         door2 = d2;
-        ball = MainGame.ball;
+        ball = PlayScene.ball;
     }
 
     public Door getDoor1(){

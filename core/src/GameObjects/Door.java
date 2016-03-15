@@ -1,21 +1,19 @@
 package GameObjects;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.game.MainGame;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.physics.PhysicsBodyLoader;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
+
+import Scenes.PlayScene;
 
 public class Door implements IScript{
     //Size for Door object
@@ -57,7 +55,7 @@ public class Door implements IScript{
                 dimensionsComponent.width, dimensionsComponent.height);
 
         shapeRenderer = new ShapeRenderer();
-        ball = MainGame.ball;
+        ball = PlayScene.ball;
 
         //Testing for the collision rectangle with transform componenet
 //        System.out.println("x: " + transformComponent.x);

@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import GameObjects.Ball;
 import GameObjects.Door;
 import GameObjects.DoorLink;
+import Scenes.PlayScene;
+import sun.applet.Main;
 
 
 public class GameGestureListener implements GestureDetector.GestureListener {
@@ -51,6 +53,12 @@ public class GameGestureListener implements GestureDetector.GestureListener {
 
                 System.out.println("Door: " + 2 + " was tapped.");
                 currentLink.switchState();
+            } else if(x * scaleX >= MainGame.worldWidthUnits - 10
+                && x * scaleX <= MainGame.worldWidthUnits
+                && MainGame.worldHeightUnits - y * scaleY >= 0
+                && MainGame.worldHeightUnits - y * scaleY <= 10){
+                System.out.println("Change to pause state.");
+                PlayScene.isPaused = !PlayScene.isPaused;
             }
         }
         System.out.println("Screen was tapped");
